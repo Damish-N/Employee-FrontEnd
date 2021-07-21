@@ -1,7 +1,9 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 
 export default function ListEmployeeComponent() {
+  const history = useHistory();
   const Employee_API_Url = "http://localhost:8080/api/v1/employees";
 
   const [Employee, setEmployee] = useState([]);
@@ -10,13 +12,26 @@ export default function ListEmployeeComponent() {
     axios.get(Employee_API_Url).then((res) => {
       console.log(res.data);
       setEmployee(res.data);
-      //   setEmployee([...Employee, res.data]);
     });
   }, []);
+
+  function addEmployee() {
+    history.push("/add_employee");
+  }
 
   return (
     <div>
       <h2 className="text-center"> Employee List</h2>
+      <div className="row">
+        <button
+          className="btn btn-primary"
+          onClick={() => {
+            addEmployee();
+          }}
+        >
+          add Employee
+        </button>
+      </div>
       <div className="row">
         <table className="table table-striped table-borderd">
           <thead>
